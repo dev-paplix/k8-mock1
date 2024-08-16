@@ -34,10 +34,14 @@ spec:
               name: q5
               key: content
         - name: USERNAME
-          secret:
-            secretName: credentials
+          valueFrom:
+           secretKeyRef:
+             name: credentials
+             key: USERNAME
         - name: PASSWORD
-          secret:
-            secretName: credentials
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: PASSWORD
         ports:
         - containerPort: 80
