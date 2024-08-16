@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-fifthexam-data
+  namespace: fifthexam
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-storage
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      volumes:
+      - name: fifthexam-data
+        persistentVolumeClaim:
+          claimName: my-fifthexam-data
+      containers:
+      - name: postgres
+        image: postgres:latest
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: fifthexam-data
+        ports:
+        - containerPort: 5432
+          name: postgres-port
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: fifthexam
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+  ports:
+  - name: postgres-svc-port
+    protocol: TCP
+    port: 5432
+    targetPort: postgres-port
