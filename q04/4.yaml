@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: credentials
+data:
+  USERNAME: aGF6aW0=
+  PASSWORD: cGFzc3dvcmQ=
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q5
+data:
+  CONTENT: "Hazim"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: apache
+spec:
+  containers:
+  - name: httpd
+    image: httpd:latest
+    ports:
+    - containerPort: 80
+    env:
+    - name: CONTENT      
+      valueFrom:
+        configMapKeyRef:
+          name: q5         
+          key: CONTENT 
+    - name: USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: credentials
+          key: USERNAME
+    - name: PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: credentials
+          key: PASSWORD
