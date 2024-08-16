@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: limit
+  namespace: qq3
+spec:
+  containers:
+  - name: redis-container
+    image: redis:latest
+    resources:
+      requests:
+        cpu: "500m"  # 0.5 CPU
+        memory: "500Mi" # 500 MiB Memory
+      limits:
+        cpu: "1"    # 1 CPU
+        memory: "1Gi" # 1Gi

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      containers:
+      - name: pgadmin
+        image: elestio/pgadmin
+        ports:
+        - containerPort: 80
+        env:
+        - name: PGADMIN_DEFAULT_EMAIL
+          value: "admin@example.com"
+        - name: PGADMIN_DEFAULT_PASSWORD
+          value: "adminpass"
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: pgadmin
+  type: NodePort
+
