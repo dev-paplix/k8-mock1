@@ -3,7 +3,8 @@ kind: Secret
 metadata:
   name: credentials
 data:
-  CONTENT: dmFsdWUtMg0KDQo=
+  USERNAME: YXdpcw== #awis
+  PASSWORD: cGFzc3dvcmQ= #password
 
 
 ---
@@ -28,9 +29,15 @@ spec:
         image: httpd:latest
         env:
         - name: CONTENT
-          value:
-        - name: SOMETHING
+          valueFrom:
+            configMapKeyRef:
+              name: q5
+              key: content
+        - name: USERNAME
           secret:
-            secretName: dotfile-secret
+            secretName: credentials
+        - name: PASSWORD
+          secret:
+            secretName: credentials
         ports:
         - containerPort: 80
