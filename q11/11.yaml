@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+        - mountPath: "/data"
+          name: podpvc
+  volumes:
+    - name: podpvc
+      persistentVolumeClaim:
+        claimName: podpvc
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: podpvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Block
+  resources:
+    requests:
+      storage: 10Gi
+  fc:
+    targetWWNs: ["50060e801049cfd1"]
+    lun: 0
+    readOnly: false
