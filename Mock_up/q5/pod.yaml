@@ -1,0 +1,16 @@
+piVersion: v1
+kind: Pod
+metadata:
+  name: qq3
+spec:
+  containers:
+  - name: limit
+    image: redis:latest
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "0.5m"
+      limits:
+        memory: "1Gi"
+        cpu: "1"
+
