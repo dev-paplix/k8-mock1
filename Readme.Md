@@ -47,20 +47,23 @@ kubectl run -n ca2 -i --tty --restart=Never --rm netutil --image cloudacademydev
 Q9:
 Create a StorageClass named class configured with the following settings:
 
-kubernetes.io/aws-ebs provisioner gp2 volume typeretain Reclaim policydo not allow for volume expansion
+kubernetes.io/aws-ebs provisioner gp2 volume type
+retain Reclaim policy
+do not allow for volume expansion
 
 
 
 Q10:
 Create a PersistentVolume named pv in the qq3 Namespace. The PersistentVolume must be configured with the following settings:
 
-storageClassName: gp21Gi of storage capacityallow a single Node read-write accessuse a hostPath of /mnt/data
+storageClassName: gp
+21Gi of storage capacity
+allow a single Node read-write accessuse a hostPath of /mnt/data
 The PersistentVolume must be claimed by a PersistentVolumeClaim named pvc. The PersistentVolume must request 1Gi of storage capacity.
 
 
 
 Q11:
-
 Create a Pod named pod with one nginx container in the qq2 namespace. The Pod must use the podpvc PersistentVolumeClaim to mount a volume at /data. The pod must have read-only access to the pvc. 
 
 
