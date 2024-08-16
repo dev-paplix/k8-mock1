@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: local-storage
+  local:
+    path: "/data/postgres"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - controlplane
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: postgres
+spec: {}
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres
+  namespace: postgres
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: local-storage
+---
+apiVersion: v1
+data:
+  POSTGRES_DB: devops
+  PGDATA: "/pgdata"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: postgres
+  namespace: postgres
+---
+apiVersion: v1
+data:
+  POSTGRES_PASSWORD: YWltYW4=
+  POSTGRES_USER: YWltYW4=
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: postgres
+  namespace: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  creationTimestamp: null
+  labels:
+    app: postgres
+  name: postgres
+  namespace: postgres-sts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  serviceName: postgres
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - image: postgres:latest
+        name: postgres
+        ports:
+        - containerPort: 5432
+        resources: {}
+        envFrom:
+        - configMapRef:
+            name: postgres
+        - secretRef:
+            name: postgres
+        volumeMounts:
+        - mountPath: /pgdata
+          name: postgres-volumes
+      volumes:
+      - name: postgres-volumes
+        persistentVolumeClaim:
+          claimName: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: postgres
+  name: postgres
+  namespace: postgres
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+    ClusterIP: None
+    type: ClusterIP
+  selector:
+    app: postgres
+
+
+
+

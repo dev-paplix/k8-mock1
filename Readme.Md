@@ -5,7 +5,7 @@ Create a deployment named nginx in the qq2 namespace using the nginx image with 
 
 
 Q2:
-Create a new  deployment name lab-deployment in the qq2 namespace. With one replica in the manifest then scale the deployment to 4 replicas.
+Create a new deployment name lab-deployment in the qq2 namespace. With one replica in the manifest then scale the deployment to 4 replicas.
 
 Q3:
 Create a deployment names nginx-deployment in the qq3 namespace. Perform a rolling update to the deployment by setting the image to nginx:alpine.
