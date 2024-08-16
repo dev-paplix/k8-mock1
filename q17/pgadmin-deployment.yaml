@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin-deployment
+  namespace: newpgadmin
+  labels:
+    app: pgadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      containers:
+      - name: pgadmin
+        image: elestio/pgadmin
+        ports:
+        - containerPort: 80
+        env:
+        - name: ADMIN_EMAIL
+          value: admin@email.com #i am sorry sir i have no time so i hardcode these
+        - name: ADMIN_PASSWORD
+          value: password
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin-service
+spec:
+  type: NodePort
+  selector:
+    app: pgadmin
+  ports:
+    - port: 80
+      # By default and for convenience, the `targetPort` is set to
+      # the same value as the `port` field.
+      targetPort: 80
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane
+      # will allocate a port from a range (default: 30000-32767)
+      nodePort: 30010
