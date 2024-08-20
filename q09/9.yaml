@@ -1,0 +1,9 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-aws
+provisioner: kubernetes.io/aws-ebs
+reclaimPolicy: Retain # default value is Delete
+allowVolumeExpansion: false
+parameters:
+  type: gp2 # provider-specific

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+  namespace: qq3
+spec:
+  containers:
+  - name: redis
+    image: redis
+    ports:
+    - containerPort: 6379
+    resources:
+      requests:
+        memory: "500Mi"
+        cpu: "0.5m"
+      limits:
+        memory: "1Gi"
+        cpu: "1m"
