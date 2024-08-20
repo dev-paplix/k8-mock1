@@ -1,16 +1,16 @@
 Name:
 
-Q1:
+Q1: 
 Create a deployment named nginx in the qq2 namespace using the nginx image with 3 replicas.
 
 
-Q2:
+Q2: 
 Create a new deployment name lab-deployment in the qq2 namespace. With one replica in the manifest then scale the deployment to 4 replicas.
 
-Q3:
+Q3: 
 Create a deployment names nginx-deployment in the qq3 namespace. Perform a rolling update to the deployment by setting the image to nginx:alpine.
 
-Q4:
+Q4: 
 Create ConfigMap name it q5 and Secret name credentials in the default namespace.
 
 The secret file should contain username and password
@@ -23,7 +23,7 @@ Create a pod named apache using the httpd image in the default namespace contain
 
 Environment variable named CONTENT containing the key content from the  q5   ConfigMap Environment variable named USERNAME containing the key username from the credentials Secret Environment variable named PASSWORD containing the key password from the credentials Secret
 
-Q:5
+Q5: 
 Create a pod named limit using the redis image in the qq3 namespace with the following resource limits and requests:
 
 RequestsCPU: 0.5Memory: 500MiLimitsCPU: 1Memory: 1Gi
@@ -46,7 +46,7 @@ kubectl run -n ca2 -i --tty --restart=Never --rm netutil --image cloudacademydev
 
 Q9:
 Create a StorageClass named class configured with the following settings:
-
+    
 kubernetes.io/aws-ebs provisioner gp2 volume typeretain Reclaim policydo not allow for volume expansion
 
 
