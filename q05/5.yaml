@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: qq3
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: limit
+  namespace: qq3
+spec:
+  containers:
+  - name: limit
+    image: redis:latest
+    resources:
+      requests:
+        memory: "500Mi"
+      limits:
+        memory: "1Gi"
+    resources:
+      requests:
+        cpu: "0.5"
+      limits:
+        cpu: "1"
+    ports:
+    - containerPort: 6379
