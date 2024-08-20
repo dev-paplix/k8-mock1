@@ -1,4 +1,6 @@
-Name:
+Name: Iman Muqri
+
+I only manage to complete only Q1,Q2,Q3,Q4,Q5,Q9,Q10,Q15
 
 Q1:
 Create a deployment named nginx in the qq2 namespace using the nginx image with 3 replicas.
